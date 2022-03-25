@@ -1,0 +1,34 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 500,
+  "height": 550,
+  "params": [{"name": "num", "select": "point"}],
+  "data": {
+    "url": "https://raw.githubusercontent.com/matchamang/Choropleth/main/district.json",
+    "format": {"type": "topojson", "feature": "geodata"}
+  },
+  "transform": [
+    {
+      "lookup": "properties.dcode",
+      "from": {
+        "data": {
+          "url": "https://raw.githubusercontent.com/matchamang/Choropleth/main/Choropleth.csv"
+        },
+        "key": "dcode",
+        "fields": ["green_zone"]
+      }
+    }
+  ],
+  "projection": {"type": "Mercator"},
+  "mark": {"type": "geoshape"},
+  "encoding": {
+    "color": {
+      "condition": {
+        "param": "num",
+        "field": "green_zone",
+        "type": "quantitative"
+      }
+    }
+  },
+  "config": {}
+}
